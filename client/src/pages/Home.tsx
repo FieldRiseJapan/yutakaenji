@@ -151,6 +151,32 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="leadership section section--leadership" id="message" aria-labelledby="message-title">
+          <span className="circuit-motif" aria-hidden="true"><i /><i /><i /></span>
+          <figure className="leadership__portrait">
+            <img src={assetUrls.president} alt="株式会社ユタカエンジニアリング 代表取締役 久保宏之" loading="lazy" />
+            <figcaption>
+              <span>{site.message.role}</span>
+              <strong>{site.message.name}</strong>
+              <em>HIROYUKI KUBO</em>
+            </figcaption>
+          </figure>
+          <div className="leadership__content">
+            <SectionHeading
+              number="02"
+              eyebrow="MESSAGE"
+              title={site.message.title}
+            />
+            <blockquote id="message-title">{site.message.quote}</blockquote>
+            <div className="leadership__copy">
+              {site.message.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            </div>
+            <a className="leadership__company-link" href="#company">
+              会社情報・沿革を見る <ArrowDown size={16} aria-hidden="true" />
+            </a>
+          </div>
+        </section>
+
         <section className="business section section--mist" id="business" aria-labelledby="business-title">
           <span className="circuit-motif" aria-hidden="true"><i /><i /><i /></span>
           <div className="business__top">
@@ -230,9 +256,23 @@ export default function Home() {
               </div>
             ))}
           </div>
+          <div className="company__history" aria-label="沿革">
+            <div className="company__history-title">
+              <span>HISTORY</span>
+              <p>歩み</p>
+            </div>
+            <div className="history-list">
+              {site.timeline.map(([year, event]) => (
+                <div className="history-item" key={`${year}-${event}`}>
+                  <span>{year}</span>
+                  <p>{event}</p>
+                </div>
+              ))}
+            </div>
+          </div>
           <a className="company__link" href="#contact">
-            ご相談・お問い合わせ <ArrowUpRight size={18} aria-hidden="true" />
-          </a>
+              ご相談・お問い合わせ <ArrowUpRight size={18} aria-hidden="true" />
+            </a>
         </section>
 
         <section className="contact" id="contact" aria-labelledby="contact-title">
