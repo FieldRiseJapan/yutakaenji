@@ -238,6 +238,37 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="history section section--history" id="history" aria-labelledby="history-title">
+          <span className="history__watermark" aria-hidden="true">1979</span>
+          <span className="circuit-motif" aria-hidden="true"><i /><i /><i /></span>
+          <div className="history__intro">
+            <SectionHeading
+              number="04"
+              eyebrow="OUR HISTORY"
+              title="技術を受け継ぎ、次の現場へ。"
+              body="高松の地で始まった歩みを、一台一台の製作とともに積み重ねてきました。"
+            />
+          </div>
+          <div className="history__story" id="history-title">
+            <div className="history__story-head">
+              <span>1979 — TODAY</span>
+              <p>株式会社ユタカエンジニアリングの歩み</p>
+            </div>
+            <ol className="history-timeline">
+              {site.timeline.map(([year, event], index) => (
+                <li className="history-timeline__item" key={`${year}-${event}`}>
+                  <span className="history-timeline__index">0{index + 1}</span>
+                  <time>{year}</time>
+                  <p>{event}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <a className="history__link" href="#company">
+            会社情報を見る <ArrowDown size={16} aria-hidden="true" />
+          </a>
+        </section>
+
         <section className="company section section--paper" id="company" aria-labelledby="company-title">
           <span className="circuit-motif" aria-hidden="true"><i /><i /><i /></span>
           <div className="company__intro">
@@ -255,20 +286,6 @@ export default function Home() {
                 <dd>{value}</dd>
               </div>
             ))}
-          </div>
-          <div className="company__history" aria-label="沿革">
-            <div className="company__history-title">
-              <span>HISTORY</span>
-              <p>歩み</p>
-            </div>
-            <div className="history-list">
-              {site.timeline.map(([year, event]) => (
-                <div className="history-item" key={`${year}-${event}`}>
-                  <span>{year}</span>
-                  <p>{event}</p>
-                </div>
-              ))}
-            </div>
           </div>
           <a className="company__link" href="#contact">
               ご相談・お問い合わせ <ArrowUpRight size={18} aria-hidden="true" />

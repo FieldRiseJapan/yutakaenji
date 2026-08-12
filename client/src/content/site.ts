@@ -10,6 +10,7 @@ export const site = {
     { label: "代表メッセージ", href: "#message" },
     { label: "事業領域", href: "#business" },
     { label: "製造と品質", href: "#quality" },
+    { label: "会社の歴史", href: "#history" },
     { label: "会社情報", href: "#company" },
   ],
   principles: [

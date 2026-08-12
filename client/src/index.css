@@ -155,6 +155,23 @@ img { display: block; max-width: 100%; }
 .process-list h3 { margin: 0; font-size: 16px; font-weight: 600; letter-spacing: 0.03em; }
 .process-list p { margin: 8px 0 0; font-size: 12px; line-height: 1.85; letter-spacing: 0.02em; }
 
+.section--history { display: grid; grid-template-columns: minmax(280px, 0.78fr) minmax(440px, 1.22fr); gap: clamp(52px, 9vw, 160px); align-items: start; color: #fff; background: var(--charcoal); }
+.section--history .circuit-motif { border-color: rgba(255, 255, 255, 0.35); }
+.section--history .circuit-motif i { background: var(--charcoal); }
+.history__watermark { position: absolute; z-index: 0; right: clamp(10px, 4vw, 66px); bottom: -0.08em; color: rgba(255, 255, 255, 0.035); font-family: "Manrope", sans-serif; font-size: clamp(140px, 21vw, 330px); font-weight: 800; line-height: 0.8; letter-spacing: -0.09em; pointer-events: none; }
+.section--history .section-heading__meta { color: #ef766f; }
+.section--history .section-heading p { color: rgba(255, 255, 255, 0.72); }
+.history__story { border-top: 1px solid var(--white-line); }
+.history__story-head { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 20px 0 28px; border-bottom: 1px solid var(--white-line); }
+.history__story-head span { font-family: "Manrope", sans-serif; font-size: 10px; font-weight: 800; color: #ef766f; letter-spacing: 0.14em; }
+.history__story-head p { margin: 0; font-size: 13px; color: rgba(255, 255, 255, 0.78); letter-spacing: 0.03em; }
+.history-timeline { padding: 0; margin: 0; list-style: none; }
+.history-timeline__item { display: grid; grid-template-columns: 42px 86px 1fr; gap: 18px; align-items: baseline; padding: 24px 0; border-bottom: 1px solid var(--white-line); }
+.history-timeline__index { font-family: "Manrope", sans-serif; font-size: 9px; font-weight: 800; color: #ef766f; letter-spacing: 0.1em; }
+.history-timeline time { font-family: "Manrope", sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -0.04em; }
+.history-timeline p { margin: 0; font-size: 13px; line-height: 1.85; color: rgba(255, 255, 255, 0.81); letter-spacing: 0.03em; }
+.history__link { grid-column: 1 / -1; display: inline-flex; align-items: center; gap: 8px; justify-self: start; padding-bottom: 8px; margin-top: -72px; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; border-bottom: 1px solid #fff; }
+
 .section--paper { background: #fafafa; }
 .company { display: grid; grid-template-columns: minmax(300px, 0.92fr) minmax(420px, 1.08fr); gap: clamp(48px, 9vw, 150px); }
 .company__profile { border-top: 1px solid var(--line); }
@@ -219,7 +236,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--red); outline-o
   .hero-card { right: 0; bottom: 0; width: min(88%, 380px); padding: 23px 25px; }
   .hero-card strong { font-size: 16px; }
   .section { padding: 88px 24px; }
-  .promise, .leadership, .business__top, .quality, .company { grid-template-columns: 1fr; gap: 46px; }
+  .promise, .leadership, .business__top, .quality, .history, .company { grid-template-columns: 1fr; gap: 46px; }
   .business__visual { width: calc(100% + 24px); margin-left: -24px; }
   .business__visual img { aspect-ratio: 1.38; }
   .business-grid { grid-template-columns: 1fr; margin-top: 48px; }
@@ -228,6 +245,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--red); outline-o
   .quality__media { min-height: 510px; padding-right: 11%; }
   .quality__image--main { width: 87%; }
   .leadership__portrait { width: min(100%, 480px); }
+  .history__link { grid-column: 1; margin-top: -12px; }
   .company__history { grid-template-columns: 1fr; gap: 22px; }
   .history-list { grid-template-columns: repeat(2, 1fr); }
   .history-item:nth-child(3n) { padding-right: 16px; border-right: 1px solid var(--line); }
@@ -256,6 +274,11 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--red); outline-o
   .leadership__portrait figcaption { width: 73%; padding: 16px 17px; }
   .leadership__portrait figcaption strong { font-size: 19px; }
   .leadership__content blockquote { font-size: 27px; }
+  .history__watermark { font-size: 160px; right: 0; }
+  .history__story-head { display: grid; gap: 8px; }
+  .history-timeline__item { grid-template-columns: 28px 68px 1fr; gap: 12px; padding: 19px 0; }
+  .history-timeline time { font-size: 18px; }
+  .history-timeline p { font-size: 12px; }
   .history-list { grid-template-columns: 1fr; }
   .history-item, .history-item:nth-child(3n), .history-item:nth-child(2n) { min-height: 0; padding: 15px 0; border-right: 0; }
   .history-item:nth-child(n + 4) { padding-top: 15px; }
