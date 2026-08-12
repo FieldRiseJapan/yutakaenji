@@ -1,5 +1,5 @@
-/** Quiet Current: an asymmetric, image-led manufacturing narrative with unambiguous contact paths. */
-import { useState } from "react";
+/** Quiet Current: SoftBank-inspired editorial sequencing, image-led chapters, and calm corporate wayfinding. */
+import { useEffect, useState } from "react";
 import {
   ArrowDown,
   ArrowUpRight,
@@ -36,12 +36,20 @@ function SectionHeading({
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const closeMenu = () => setIsMenuOpen(false);
 
+  useEffect(() => {
+    const updateHeader = () => setIsScrolled(window.scrollY > 42);
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+    return () => window.removeEventListener("scroll", updateHeader);
+  }, []);
+
   return (
     <div className="site-shell">
-      <header className="site-header">
+      <header className={`site-header ${isScrolled ? "is-scrolled" : ""}`}>
         <a className="brand" href="#top" aria-label={`${site.companyName} トップへ`}>
           <span className="brand__mark"><img src={assetUrls.mark} alt="" /></span>
           <span className="brand__copy">
@@ -127,6 +135,23 @@ export default function Home() {
           </aside>
         </section>
 
+        <section className="top-news" aria-labelledby="news-title">
+          <div className="top-news__heading">
+            <span>INFORMATION</span>
+            <h2 id="news-title">最新情報</h2>
+          </div>
+          <div className="top-news__items">
+            {site.announcements.map((item) => (
+              <a className="top-news__item" href={item.href} key={`${item.date}-${item.category}`}>
+                <time>{item.date}</time>
+                <span>{item.category}</span>
+                <strong>{item.title}</strong>
+                <ArrowUpRight size={17} aria-hidden="true" />
+              </a>
+            ))}
+          </div>
+        </section>
+
         <section className="promise section" id="promise" aria-labelledby="promise-title">
           <span className="circuit-motif" aria-hidden="true"><i /><i /><i /></span>
           <div className="promise__intro">
@@ -163,7 +188,7 @@ export default function Home() {
           </figure>
           <div className="leadership__content">
             <SectionHeading
-              number="02"
+              number="03"
               eyebrow="MESSAGE"
               title={site.message.title}
             />
@@ -181,7 +206,7 @@ export default function Home() {
           <span className="circuit-motif" aria-hidden="true"><i /><i /><i /></span>
           <div className="business__top">
             <SectionHeading
-              number="02"
+              number="04"
               eyebrow="CAPABILITIES"
               title="一台ごとの要求に、まっすぐ応える。"
               body="設計・組立・改造から加工まで。用途と現場に合わせた、確かな製作を行います。"
@@ -219,7 +244,7 @@ export default function Home() {
           </div>
           <div className="quality__content">
             <SectionHeading
-              number="03"
+              number="05"
               eyebrow="MANUFACTURING & QUALITY"
               title="図面の先まで、品質をつなぐ。"
               body="求められる機能に対し、確実に、正確に。工程の一つひとつに責任を持って製作します。"
@@ -243,7 +268,7 @@ export default function Home() {
           <span className="circuit-motif" aria-hidden="true"><i /><i /><i /></span>
           <div className="history__intro">
             <SectionHeading
-              number="04"
+              number="06"
               eyebrow="OUR HISTORY"
               title="技術を受け継ぎ、次の現場へ。"
               body="高松の地で始まった歩みを、一台一台の製作とともに積み重ねてきました。"
@@ -273,7 +298,7 @@ export default function Home() {
           <span className="circuit-motif" aria-hidden="true"><i /><i /><i /></span>
           <div className="company__intro">
             <SectionHeading
-              number="04"
+              number="07"
               eyebrow="COMPANY"
               title="技術を積み重ね、地域に根を張る。"
               body="香川県高松市を拠点に、配電・制御の現場と向き合っています。"
@@ -293,7 +318,7 @@ export default function Home() {
         </section>
 
         <section className="contact" id="contact" aria-labelledby="contact-title">
-          <div className="contact__index">05 / CONTACT</div>
+          <div className="contact__index">08 / CONTACT</div>
           <div className="contact__body">
             <p>配電盤・制御盤・ハーネス加工のご相談をお受けします。</p>
             <h2 id="contact-title">まずは、現場のことを<br />お聞かせください。</h2>

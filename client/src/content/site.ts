@@ -13,6 +13,26 @@ export const site = {
     { label: "会社の歴史", href: "#history" },
     { label: "会社情報", href: "#company" },
   ],
+  announcements: [
+    {
+      date: "2026.08.12",
+      category: "UPDATE",
+      title: "会社の歴史を公開しました。",
+      href: "#history",
+    },
+    {
+      date: "2026.08.12",
+      category: "MESSAGE",
+      title: "代表メッセージを掲載しました。",
+      href: "#message",
+    },
+    {
+      date: "2026.08.12",
+      category: "CONTACT",
+      title: "配電・制御盤のご相談を承ります。",
+      href: "#contact",
+    },
+  ],
   principles: [
     {
       number: "01",
