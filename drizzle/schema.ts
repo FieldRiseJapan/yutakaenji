@@ -1,4 +1,4 @@
-import { boolean, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, int, mysqlEnum, mysqlTable, text, timestamp, unique, varchar } from "drizzle-orm/mysql-core";
 
 export const users = mysqlTable("users", {
   id: int("id").autoincrement().primaryKey(),
@@ -50,6 +50,32 @@ export const quoteAttachments = mysqlTable("quote_attachments", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
+export const quoteEstimates = mysqlTable("quote_estimates", {
+  id: int("id").autoincrement().primaryKey(),
+  quoteRequestId: int("quoteRequestId").notNull().references(() => quoteRequests.id, { onDelete: "cascade" }),
+  estimateNumber: varchar("estimateNumber", { length: 80 }).notNull(),
+  issueDate: varchar("issueDate", { length: 32 }).notNull(),
+  validUntil: varchar("validUntil", { length: 80 }).notNull(),
+  taxRate: int("taxRate").default(10).notNull(),
+  deliveryTerms: text("deliveryTerms"),
+  paymentTerms: text("paymentTerms"),
+  notes: text("notes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => [unique("quote_estimates_quote_request_unique").on(table.quoteRequestId), unique("quote_estimates_estimate_number_unique").on(table.estimateNumber)]);
+
+export const quoteEstimateItems = mysqlTable("quote_estimate_items", {
+  id: int("id").autoincrement().primaryKey(),
+  estimateId: int("estimateId").notNull().references(() => quoteEstimates.id, { onDelete: "cascade" }),
+  sortOrder: int("sortOrder").notNull(),
+  description: varchar("description", { length: 255 }).notNull(),
+  specification: text("specification"),
+  quantity: int("quantity").default(1).notNull(),
+  unit: varchar("unit", { length: 32 }).default("式").notNull(),
+  unitPrice: int("unitPrice").default(0).notNull(),
+});
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 export type InsertQuoteRequest = typeof quoteRequests.$inferInsert;
+export type InsertQuoteEstimate = typeof quoteEstimates.$inferInsert;

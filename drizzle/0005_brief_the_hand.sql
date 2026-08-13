@@ -1,0 +1,1 @@
+ALTER TABLE `quote_estimates` ADD CONSTRAINT `quote_estimates_estimate_number_unique` UNIQUE(`estimateNumber`);

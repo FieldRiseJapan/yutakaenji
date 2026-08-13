@@ -1,7 +1,8 @@
-import { and, desc, eq } from "drizzle-orm";
+import { and, asc, desc, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { quoteAttachments, quoteRequests, type InsertQuoteRequest, type InsertUser, users } from "../drizzle/schema";
+import { quoteAttachments, quoteEstimateItems, quoteEstimates, quoteRequests, type InsertQuoteRequest, type InsertUser, users } from "../drizzle/schema";
 import { ENV } from "./_core/env";
+import { buildQuoteEstimateNumber } from "@shared/quoteEstimateNumber";
 
 let database: ReturnType<typeof drizzle> | null = null;
 
@@ -86,6 +87,58 @@ export async function listQuoteRequests() {
   const requests = await db.select().from(quoteRequests).orderBy(desc(quoteRequests.createdAt));
   const attachments = await db.select().from(quoteAttachments).orderBy(desc(quoteAttachments.createdAt));
   return requests.map((request) => ({ ...request, attachments: attachments.filter((attachment) => attachment.quoteRequestId === request.id) }));
+}
+
+export async function getQuoteRequestById(id: number) {
+  const db = requireDb(await getDb());
+  const request = await db.select().from(quoteRequests).where(eq(quoteRequests.id, id)).limit(1);
+  if (!request[0]) return undefined;
+  const attachments = await db.select().from(quoteAttachments).where(eq(quoteAttachments.quoteRequestId, id)).orderBy(desc(quoteAttachments.createdAt));
+  return { ...request[0], attachments };
+}
+
+export async function getQuoteEstimate(quoteRequestId: number) {
+  const db = requireDb(await getDb());
+  const estimate = await db.select().from(quoteEstimates).where(eq(quoteEstimates.quoteRequestId, quoteRequestId)).limit(1);
+  // tRPC/React Query cannot cache `undefined`; an absent draft is a valid empty state.
+  if (!estimate[0]) return null;
+  const items = await db.select().from(quoteEstimateItems).where(eq(quoteEstimateItems.estimateId, estimate[0].id)).orderBy(asc(quoteEstimateItems.sortOrder));
+  return { ...estimate[0], items };
+}
+
+export type QuoteEstimateSaveInput = {
+  quoteRequestId: number;
+  estimateNumber?: string;
+  issueDate: string;
+  validUntil: string;
+  taxRate: number;
+  deliveryTerms?: string | null;
+  paymentTerms?: string | null;
+  notes?: string | null;
+  items: Array<{ description: string; specification?: string | null; quantity: number; unit: string; unitPrice: number }>;
+};
+
+export async function saveQuoteEstimate(input: QuoteEstimateSaveInput) {
+  const db = requireDb(await getDb());
+  return db.transaction(async (tx) => {
+    const existing = await tx.select({ id: quoteEstimates.id }).from(quoteEstimates).where(eq(quoteEstimates.quoteRequestId, input.quoteRequestId)).limit(1);
+    const baseValues = { issueDate: input.issueDate, validUntil: input.validUntil, taxRate: input.taxRate, deliveryTerms: input.deliveryTerms ?? null, paymentTerms: input.paymentTerms ?? null, notes: input.notes ?? null };
+    let estimateId = existing[0]?.id;
+    let estimateNumber = "";
+    if (!estimateId) {
+      const result = await tx.insert(quoteEstimates).values({ ...baseValues, estimateNumber: `PENDING-${Date.now()}`, quoteRequestId: input.quoteRequestId });
+      estimateId = Number(result[0].insertId);
+      estimateNumber = buildQuoteEstimateNumber(estimateId);
+      await tx.update(quoteEstimates).set({ estimateNumber }).where(eq(quoteEstimates.id, estimateId));
+    } else {
+      const current = await tx.select({ estimateNumber: quoteEstimates.estimateNumber }).from(quoteEstimates).where(eq(quoteEstimates.id, estimateId)).limit(1);
+      estimateNumber = current[0]?.estimateNumber ?? buildQuoteEstimateNumber(estimateId);
+      await tx.update(quoteEstimates).set({ ...baseValues, estimateNumber }).where(eq(quoteEstimates.id, estimateId));
+    }
+    await tx.delete(quoteEstimateItems).where(eq(quoteEstimateItems.estimateId, estimateId));
+    await tx.insert(quoteEstimateItems).values(input.items.map((item, index) => ({ estimateId, sortOrder: index, description: item.description, specification: item.specification ?? null, quantity: item.quantity, unit: item.unit, unitPrice: item.unitPrice })));
+    return { estimateId, estimateNumber };
+  });
 }
 
 export async function setQuoteStatus(id: number, status: "new" | "reviewing" | "quoted" | "closed") {

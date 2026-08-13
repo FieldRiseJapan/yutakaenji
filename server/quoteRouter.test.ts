@@ -11,6 +11,9 @@ const mocks = vi.hoisted(() => ({
     setQuoteAdminNote: vi.fn(),
     createQuoteSample: vi.fn(),
     deleteQuoteSample: vi.fn(),
+    getQuoteRequestById: vi.fn(),
+    getQuoteEstimate: vi.fn(),
+    saveQuoteEstimate: vi.fn(),
   },
   storage: { storagePut: vi.fn() },
   notification: { notifyQuoteRequest: vi.fn() },
@@ -101,5 +104,19 @@ describe("quote.submit", () => {
     await expect(caller.quote.deleteSample({ id: 88 })).resolves.toEqual({ success: true });
     expect(mocks.database.createQuoteSample).toHaveBeenCalledOnce();
     expect(mocks.database.deleteQuoteSample).toHaveBeenCalledWith(88);
+  });
+
+  it("allows an administrator to save a draft estimate with editable line items", async () => {
+    mocks.database.saveQuoteEstimate.mockResolvedValue({ estimateId: 91, estimateNumber: "YEK-202608-00091" });
+    const caller = appRouter.createCaller(createAdminContext());
+    const input = { quoteRequestId: 42, issueDate: "2026年8月13日", validUntil: "発行日より30日", taxRate: 10, items: [{ description: "ハーネス加工", quantity: 25, unit: "本", unitPrice: 1000 }] };
+    await expect(caller.quote.saveEstimate(input)).resolves.toEqual({ estimateId: 91, estimateNumber: "YEK-202608-00091" });
+    expect(mocks.database.saveQuoteEstimate).toHaveBeenCalledWith(input);
+  });
+
+  it("returns null for a quote that does not yet have an estimate draft", async () => {
+    mocks.database.getQuoteEstimate.mockResolvedValue(null);
+    const caller = appRouter.createCaller(createAdminContext());
+    await expect(caller.quote.getEstimate({ quoteRequestId: 42 })).resolves.toBeNull();
   });
 });

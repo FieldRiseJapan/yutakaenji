@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import QuoteRequest from "./pages/QuoteRequest";
 import QuoteReview from "./pages/QuoteReview";
+import QuoteEstimate from "./pages/QuoteEstimate";
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
       <Route path="/harness-quote" component={QuoteRequest} />
       <Route path="/privacy" component={PrivacyPolicy} />
       <Route path="/admin/quotes" component={QuoteReview} />
+      <Route path="/admin/quotes/:quoteId/estimate" component={QuoteEstimate} />
       <Route component={Home} />
     </Switch>
   );

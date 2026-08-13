@@ -3,11 +3,13 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { adminProcedure, publicProcedure, router } from "./_core/trpc";
 import { systemRouter } from "./_core/systemRouter";
-import { addQuoteAttachment, createQuoteRequest, createQuoteSample, deleteQuoteSample, listQuoteRequests, setQuoteAdminNote, setQuoteStatus, updateQuoteNotification } from "./db";
+import { addQuoteAttachment, createQuoteRequest, createQuoteSample, deleteQuoteSample, getQuoteEstimate, getQuoteRequestById, listQuoteRequests, saveQuoteEstimate, setQuoteAdminNote, setQuoteStatus, updateQuoteNotification } from "./db";
 import { notifyQuoteRequest } from "./quoteNotification";
 import { storagePut } from "./storage";
 
 const quoteStatus = z.enum(["new", "reviewing", "quoted", "closed"]);
+const estimateItemInput = z.object({ description: z.string().min(1).max(255), specification: z.string().max(12000).optional(), quantity: z.number().int().min(1).max(1_000_000), unit: z.string().min(1).max(32), unitPrice: z.number().int().min(0).max(1_000_000_000) });
+const estimateInput = z.object({ quoteRequestId: z.number().int().positive(), estimateNumber: z.string().max(80).optional(), issueDate: z.string().min(1).max(32), validUntil: z.string().min(1).max(80), taxRate: z.number().int().min(0).max(100), deliveryTerms: z.string().max(12000).optional(), paymentTerms: z.string().max(12000).optional(), notes: z.string().max(12000).optional(), items: z.array(estimateItemInput).min(1).max(50) });
 const fileInput = z.object({
   name: z.string().min(1).max(500),
   type: z.string().min(1).max(160),
@@ -92,6 +94,9 @@ export const appRouter = router({
       return { requestId, notificationStatus: notification.status };
     }),
     list: adminProcedure.query(() => listQuoteRequests()),
+    getById: adminProcedure.input(z.object({ id: z.number().int().positive() })).query(({ input }) => getQuoteRequestById(input.id)),
+    getEstimate: adminProcedure.input(z.object({ quoteRequestId: z.number().int().positive() })).query(({ input }) => getQuoteEstimate(input.quoteRequestId)),
+    saveEstimate: adminProcedure.input(estimateInput).mutation(async ({ input }) => saveQuoteEstimate(input)),
     updateStatus: adminProcedure.input(z.object({ id: z.number().int().positive(), status: quoteStatus })).mutation(async ({ input }) => {
       await setQuoteStatus(input.id, input.status);
       return { success: true } as const;

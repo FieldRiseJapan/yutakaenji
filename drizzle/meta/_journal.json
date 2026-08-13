@@ -29,6 +29,20 @@
       "when": 1786590617142,
       "tag": "0003_cheerful_the_order",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1786593661345,
+      "tag": "0004_real_raider",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1786597735148,
+      "tag": "0005_brief_the_hand",
+      "breakpoints": true
     }
   ]
 }
