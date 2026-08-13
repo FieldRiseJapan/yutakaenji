@@ -7,6 +7,7 @@
 | 社名、電話番号、住所、事業内容、沿革、最新情報 | `client/src/content/site.ts` | `companyName`、`phone`、`announcements`、`businesses`、`timeline` |
 | 代表メッセージ・代表者名・掲載文章 | `client/src/content/site.ts` | `message` |
 | 将来のハーネス見積もりフォームの文言・質問 | `client/src/content/harnessQuote.ts` | `title`、`lead`、`steps`、`questions` |
+| 見積もり通知先・通知の有効化 | `server/quoteNotification.ts` | `recipientEmail`、`senderEmail` |
 | トップの最新情報帯の表示部品 | `client/src/components/NewsStrip.tsx` | 見出しや表示順の変更 |
 | 各章の見出し表示部品 | `client/src/components/SectionHeading.tsx` | 章番号・ラベルの見せ方 |
 | ページの並び順・各セクションの文章位置 | `client/src/pages/Home.tsx` | セクションの追加・削除・並び替え |
@@ -34,6 +35,8 @@
 ### フォーム実装時の注意
 
 現時点の `harnessQuote.ts` は、**フォーム質問を先に確定するための設定ファイル**です。実際に図面や写真を受け付けるときは、安全なファイル保管、受付通知、個人情報の取扱いが必要です。そのため、フォーム実装時には静的サイトのままではなく、ファイル保管とサーバー処理を追加した構成へ移行します。
+
+現在は受付保存・資料添付・管理画面まで実装済みです。通知先の決定後は [QUOTE-NOTIFICATION-SETUP.md](./QUOTE-NOTIFICATION-SETUP.md) の手順でメール通知を有効化してください。
 
 ## 編集後の確認
 

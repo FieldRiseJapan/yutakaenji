@@ -1,4 +1,5 @@
 /** Quiet Current: standalone client build config for deployment systems rooted at client/. */
+import path from "node:path";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import react from "@vitejs/plugin-react";
 
@@ -52,4 +53,10 @@ function vitePluginStorageProxy(): Plugin {
 
 export default defineConfig({
   plugins: [react(), vitePluginStorageProxy()],
+  resolve: {
+    alias: {
+      "@": path.resolve(import.meta.dirname, "src"),
+      "@shared": path.resolve(import.meta.dirname, "..", "shared"),
+    },
+  },
 });

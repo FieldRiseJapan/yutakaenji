@@ -1,60 +1,21 @@
-/** Quiet Current: Vite root intentionally targets the handoff-friendly client directory. */
-import { defineConfig, type Plugin, type ViteDevServer } from "vite";
+/** Quiet Current: preserve the editorial public site while the Express server provides data and file APIs. */
+import path from "node:path";
 import react from "@vitejs/plugin-react";
-
-function vitePluginStorageProxy(): Plugin {
-  return {
-    name: "manus-storage-proxy",
-    configureServer(server: ViteDevServer) {
-      server.middlewares.use("/manus-storage", async (req, res) => {
-        const key = req.url?.replace(/^\//, "");
-        if (!key) {
-          res.writeHead(400, { "Content-Type": "text/plain" });
-          res.end("Missing storage key");
-          return;
-        }
-
-        const forgeBaseUrl = (process.env.BUILT_IN_FORGE_API_URL || "").replace(/\/+$/, "");
-        const forgeKey = process.env.BUILT_IN_FORGE_API_KEY;
-        if (!forgeBaseUrl || !forgeKey) {
-          res.writeHead(500, { "Content-Type": "text/plain" });
-          res.end("Storage proxy not configured");
-          return;
-        }
-
-        try {
-          const forgeUrl = new URL("v1/storage/presign/get", `${forgeBaseUrl}/`);
-          forgeUrl.searchParams.set("path", key);
-          const forgeResp = await fetch(forgeUrl, {
-            headers: { Authorization: `Bearer ${forgeKey}` },
-          });
-          if (!forgeResp.ok) {
-            res.writeHead(502, { "Content-Type": "text/plain" });
-            res.end("Storage backend error");
-            return;
-          }
-          const { url } = (await forgeResp.json()) as { url: string };
-          if (!url) {
-            res.writeHead(502, { "Content-Type": "text/plain" });
-            res.end("Empty signed URL");
-            return;
-          }
-          res.writeHead(307, { Location: url, "Cache-Control": "no-store" });
-          res.end();
-        } catch {
-          res.writeHead(502, { "Content-Type": "text/plain" });
-          res.end("Storage proxy error");
-        }
-      });
-    },
-  };
-}
+import { defineConfig } from "vite";
+import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
 
 export default defineConfig({
-  root: "./client",
-  plugins: [react(), vitePluginStorageProxy()],
+  root: path.resolve(import.meta.dirname, "client"),
+  plugins: [react(), vitePluginManusRuntime()],
+  resolve: {
+    alias: {
+      "@": path.resolve(import.meta.dirname, "client", "src"),
+      "@shared": path.resolve(import.meta.dirname, "shared"),
+    },
+  },
+  publicDir: path.resolve(import.meta.dirname, "client", "public"),
   build: {
-    outDir: "../dist",
+    outDir: path.resolve(import.meta.dirname, "dist", "public"),
     emptyOutDir: true,
   },
 });

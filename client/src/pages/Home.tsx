@@ -44,8 +44,8 @@ export default function Home() {
           ))}
         </nav>
 
-        <a className="header-contact" href="#contact">
-          <span>お問い合わせ</span>
+        <a className="header-contact" href="/harness-quote">
+          <span>ハーネス見積もり</span>
           <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
         </a>
 
@@ -72,6 +72,9 @@ export default function Home() {
           ))}
           <a href="#contact" onClick={closeMenu} className="mobile-menu__contact">
             お問い合わせ
+          </a>
+          <a href="/harness-quote" onClick={closeMenu} className="mobile-menu__contact">
+            ハーネス見積もり
           </a>
         </nav>
       </div>
