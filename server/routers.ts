@@ -85,7 +85,7 @@ export const appRouter = router({
         await addQuoteAttachment({ quoteRequestId: requestId, fileKey: stored.key, fileUrl: stored.url, originalName: file.name, contentType: file.type, byteSize: file.size });
       }
 
-      const notification = await notifyQuoteRequest({ requestId, companyName: input.companyName, contactName: input.contactName, requestType: input.requestType, quantity: input.quantity, delivery: input.delivery });
+      const notification = await notifyQuoteRequest({ requestId, companyName: input.companyName, contactName: input.contactName, customerEmail: input.email, requestType: input.requestType, quantity: input.quantity, delivery: input.delivery });
       await updateQuoteNotification(requestId, notification.status, notification.reason);
       return { requestId, notificationStatus: notification.status };
     }),
