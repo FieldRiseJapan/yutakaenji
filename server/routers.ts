@@ -29,6 +29,7 @@ const quoteInput = z.object({
   contactName: z.string().min(1).max(255),
   email: z.string().email().max(320),
   phone: z.string().min(6).max(64),
+  privacyAccepted: z.boolean().refine((value) => value, { message: "個人情報の取扱いへの同意が必要です。" }),
   files: z.array(fileInput).max(3),
 });
 
@@ -72,6 +73,7 @@ export const appRouter = router({
         contactName: input.contactName,
         email: input.email,
         phone: input.phone,
+        privacyAcceptedAt: new Date(),
         notificationStatus: "skipped",
       });
 

@@ -1,5 +1,5 @@
 /** Quiet Current: a calm, stepwise harness quote draft that uses editable questions from the content module. */
-import { ArrowLeft, ArrowRight, Check, FileUp, LoaderCircle, Paperclip } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, FileUp, LoaderCircle, Paperclip, ShieldCheck } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import { harnessQuoteConfig, type QuoteQuestion } from "../content/harnessQuote";
@@ -26,6 +26,7 @@ export default function QuoteRequest() {
   const [stepIndex, setStepIndex] = useState(0);
   const [values, setValues] = useState<FormValues>({});
   const [files, setFiles] = useState<UploadPayload[]>([]);
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [error, setError] = useState("");
   const submitQuote = trpc.quote.submit.useMutation();
   const step = harnessQuoteConfig.steps[stepIndex];
@@ -79,6 +80,10 @@ export default function QuoteRequest() {
 
   const submit = () => {
     if (!validateCurrentStep()) return;
+    if (!privacyAccepted) {
+      setError(harnessQuoteConfig.privacy.consentRequiredMessage);
+      return;
+    }
     submitQuote.mutate(
       {
         requestType: values.requestType,
@@ -94,6 +99,7 @@ export default function QuoteRequest() {
         contactName: values.contactName,
         email: values.email,
         phone: values.phone,
+        privacyAccepted: true,
         files,
       },
       { onError: (mutationError) => setError(mutationError.message || "依頼を受け付けられませんでした。時間をおいて再度お試しください。") },
@@ -185,6 +191,17 @@ export default function QuoteRequest() {
           <div className="quote-form-card__head"><span>STEP 0{stepIndex + 1}</span><p>{step.description}</p></div>
           <h2>{step.title}</h2>
           <div className="quote-fields">{step.questions.map(renderQuestion)}</div>
+          {stepIndex === totalSteps - 1 && (
+            <div className="quote-consent">
+              <div className="quote-consent__heading"><ShieldCheck size={18} /><strong>個人情報の取扱い</strong></div>
+              <p>ご入力いただく連絡先・ご相談内容・添付資料は、お見積もり対応およびご連絡のために利用します。</p>
+              <Link href="/privacy" target="_blank" className="quote-consent__link">{harnessQuoteConfig.privacy.linkLabel} <ArrowRight size={14} /></Link>
+              <label className={`quote-consent__check ${privacyAccepted ? "is-checked" : ""}`}>
+                <input type="checkbox" checked={privacyAccepted} onChange={(event) => { setPrivacyAccepted(event.target.checked); setError(""); }} />
+                <span>{harnessQuoteConfig.privacy.consentLabel}<b>必須</b></span>
+              </label>
+            </div>
+          )}
           {error && <p className="quote-error" role="alert">{error}</p>}
           <div className="quote-actions">
             {stepIndex > 0 ? <button className="quote-button quote-button--subtle" type="button" onClick={() => setStepIndex((current) => current - 1)}><ArrowLeft size={16} />戻る</button> : <span />}

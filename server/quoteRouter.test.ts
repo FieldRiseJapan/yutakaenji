@@ -48,6 +48,7 @@ describe("quote.submit", () => {
       contactName: "見積 太郎",
       email: "quote@example.com",
       phone: "087-000-0000",
+      privacyAccepted: true,
       files: [{ name: "図面 01.pdf", type: "application/pdf", size: 4, data: Buffer.from("test").toString("base64") }],
     });
 
@@ -56,5 +57,21 @@ describe("quote.submit", () => {
     expect(mocks.storage.storagePut).toHaveBeenCalledWith("quotes/42/___01.pdf", expect.any(Buffer), "application/pdf");
     expect(mocks.database.addQuoteAttachment).toHaveBeenCalledWith(expect.objectContaining({ quoteRequestId: 42, originalName: "図面 01.pdf" }));
     expect(mocks.database.updateQuoteNotification).toHaveBeenCalledWith(42, "skipped", "担当者メールアドレスが未設定です");
+  });
+
+  it("rejects a quote that does not include privacy consent", async () => {
+    const caller = appRouter.createCaller(createPublicContext());
+    await expect(caller.quote.submit({
+      requestType: "new",
+      quantity: "10本",
+      delivery: "未定",
+      companyName: "株式会社テスト",
+      contactName: "見積 太郎",
+      email: "quote@example.com",
+      phone: "087-000-0000",
+      privacyAccepted: false,
+      files: [],
+    })).rejects.toThrow();
+    expect(mocks.database.createQuoteRequest).not.toHaveBeenCalled();
   });
 });

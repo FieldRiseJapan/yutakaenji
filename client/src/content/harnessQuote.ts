@@ -19,6 +19,11 @@ export const harnessQuoteConfig = {
   lead: "図面がなくても、分かる範囲でお聞かせください。手書きのスケッチや既存品の写真からもご相談いただけます。",
   responseGuide: "内容を確認のうえ、担当者より1営業日以内を目安にご連絡します。確定価格の自動表示は行いません。",
   attachmentGuide: "PDF、DXF、DWG、Excel、画像、ZIPを3ファイル・合計10MBまで添付できます。",
+  privacy: {
+    consentLabel: "個人情報の取扱いに同意して依頼内容を送信する",
+    consentRequiredMessage: "個人情報の取扱いへの同意が必要です。",
+    linkLabel: "個人情報の取扱いについて",
+  },
   maxFiles: 3,
   maxTotalBytes: 10 * 1024 * 1024,
   allowedExtensions: ["pdf", "dxf", "dwg", "xls", "xlsx", "zip", "jpg", "jpeg", "png", "webp"],

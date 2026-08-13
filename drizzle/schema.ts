@@ -29,6 +29,7 @@ export const quoteRequests = mysqlTable("quote_requests", {
   contactName: varchar("contactName", { length: 255 }).notNull(),
   email: varchar("email", { length: 320 }).notNull(),
   phone: varchar("phone", { length: 64 }).notNull(),
+  privacyAcceptedAt: timestamp("privacyAcceptedAt").notNull(),
   notificationStatus: mysqlEnum("notificationStatus", ["skipped", "sent", "failed"]).default("skipped").notNull(),
   notificationNote: varchar("notificationNote", { length: 500 }),
   status: mysqlEnum("status", quoteStatusValues).default("new").notNull(),

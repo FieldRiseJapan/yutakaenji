@@ -1,0 +1,1 @@
+ALTER TABLE `quote_requests` ADD `privacyAcceptedAt` timestamp NOT NULL;
