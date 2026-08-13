@@ -9,30 +9,8 @@ import {
   X,
 } from "lucide-react";
 import { assetUrls, site } from "../content/site";
-
-function SectionHeading({
-  eyebrow,
-  number,
-  title,
-  body,
-}: {
-  eyebrow: string;
-  number: string;
-  title: string;
-  body?: string;
-}) {
-  return (
-    <div className="section-heading">
-      <div className="section-heading__meta">
-        <span>{number}</span>
-        <i />
-        <span>{eyebrow}</span>
-      </div>
-      <h2>{title}</h2>
-      {body && <p>{body}</p>}
-    </div>
-  );
-}
+import { NewsStrip } from "../components/NewsStrip";
+import { SectionHeading } from "../components/SectionHeading";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -135,22 +113,7 @@ export default function Home() {
           </aside>
         </section>
 
-        <section className="top-news" aria-labelledby="news-title">
-          <div className="top-news__heading">
-            <span>INFORMATION</span>
-            <h2 id="news-title">最新情報</h2>
-          </div>
-          <div className="top-news__items">
-            {site.announcements.map((item) => (
-              <a className="top-news__item" href={item.href} key={`${item.date}-${item.category}`}>
-                <time>{item.date}</time>
-                <span>{item.category}</span>
-                <strong>{item.title}</strong>
-                <ArrowUpRight size={17} aria-hidden="true" />
-              </a>
-            ))}
-          </div>
-        </section>
+        <NewsStrip items={site.announcements} />
 
         <section className="promise section" id="promise" aria-labelledby="promise-title">
           <span className="circuit-motif" aria-hidden="true"><i /><i /><i /></span>
