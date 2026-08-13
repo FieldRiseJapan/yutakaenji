@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 export const users = mysqlTable("users", {
   id: int("id").autoincrement().primaryKey(),
@@ -30,6 +30,8 @@ export const quoteRequests = mysqlTable("quote_requests", {
   email: varchar("email", { length: 320 }).notNull(),
   phone: varchar("phone", { length: 64 }).notNull(),
   privacyAcceptedAt: timestamp("privacyAcceptedAt").notNull(),
+  adminNote: text("adminNote"),
+  isSample: boolean("isSample").default(false).notNull(),
   notificationStatus: mysqlEnum("notificationStatus", ["skipped", "sent", "failed"]).default("skipped").notNull(),
   notificationNote: varchar("notificationNote", { length: 500 }),
   status: mysqlEnum("status", quoteStatusValues).default("new").notNull(),

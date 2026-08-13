@@ -1,0 +1,1 @@
+ALTER TABLE `quote_requests` ADD `isSample` boolean DEFAULT false NOT NULL;

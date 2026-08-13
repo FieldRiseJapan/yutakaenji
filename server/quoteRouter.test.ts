@@ -8,6 +8,9 @@ const mocks = vi.hoisted(() => ({
     updateQuoteNotification: vi.fn(),
     listQuoteRequests: vi.fn(),
     setQuoteStatus: vi.fn(),
+    setQuoteAdminNote: vi.fn(),
+    createQuoteSample: vi.fn(),
+    deleteQuoteSample: vi.fn(),
   },
   storage: { storagePut: vi.fn() },
   notification: { notifyQuoteRequest: vi.fn() },
@@ -22,6 +25,14 @@ import { appRouter } from "./routers";
 function createPublicContext(): TrpcContext {
   return {
     user: null,
+    req: {} as TrpcContext["req"],
+    res: {} as TrpcContext["res"],
+  };
+}
+
+function createAdminContext(): TrpcContext {
+  return {
+    user: { id: 1, openId: "admin-user", name: "管理者", email: "admin@example.com", loginMethod: "manus", role: "admin", createdAt: new Date(), updatedAt: new Date(), lastSignedIn: new Date() },
     req: {} as TrpcContext["req"],
     res: {} as TrpcContext["res"],
   };
@@ -73,5 +84,22 @@ describe("quote.submit", () => {
       files: [],
     })).rejects.toThrow();
     expect(mocks.database.createQuoteRequest).not.toHaveBeenCalled();
+  });
+
+  it("allows an administrator to save an internal handling memo", async () => {
+    mocks.database.setQuoteAdminNote.mockResolvedValue(undefined);
+    const caller = appRouter.createCaller(createAdminContext());
+    await expect(caller.quote.updateAdminNote({ id: 42, adminNote: "折り返しは午後に希望" })).resolves.toEqual({ success: true });
+    expect(mocks.database.setQuoteAdminNote).toHaveBeenCalledWith(42, "折り返しは午後に希望");
+  });
+
+  it("lets an administrator create and remove a clearly marked confirmation sample", async () => {
+    mocks.database.createQuoteSample.mockResolvedValue(88);
+    mocks.database.deleteQuoteSample.mockResolvedValue(undefined);
+    const caller = appRouter.createCaller(createAdminContext());
+    await expect(caller.quote.createSample()).resolves.toEqual({ requestId: 88 });
+    await expect(caller.quote.deleteSample({ id: 88 })).resolves.toEqual({ success: true });
+    expect(mocks.database.createQuoteSample).toHaveBeenCalledOnce();
+    expect(mocks.database.deleteQuoteSample).toHaveBeenCalledWith(88);
   });
 });

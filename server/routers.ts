@@ -3,7 +3,7 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { adminProcedure, publicProcedure, router } from "./_core/trpc";
 import { systemRouter } from "./_core/systemRouter";
-import { addQuoteAttachment, createQuoteRequest, listQuoteRequests, setQuoteStatus, updateQuoteNotification } from "./db";
+import { addQuoteAttachment, createQuoteRequest, createQuoteSample, deleteQuoteSample, listQuoteRequests, setQuoteAdminNote, setQuoteStatus, updateQuoteNotification } from "./db";
 import { notifyQuoteRequest } from "./quoteNotification";
 import { storagePut } from "./storage";
 
@@ -94,6 +94,18 @@ export const appRouter = router({
     list: adminProcedure.query(() => listQuoteRequests()),
     updateStatus: adminProcedure.input(z.object({ id: z.number().int().positive(), status: quoteStatus })).mutation(async ({ input }) => {
       await setQuoteStatus(input.id, input.status);
+      return { success: true } as const;
+    }),
+    updateAdminNote: adminProcedure.input(z.object({ id: z.number().int().positive(), adminNote: z.string().max(4000) })).mutation(async ({ input }) => {
+      await setQuoteAdminNote(input.id, input.adminNote.trim());
+      return { success: true } as const;
+    }),
+    createSample: adminProcedure.mutation(async () => {
+      const requestId = await createQuoteSample();
+      return { requestId } as const;
+    }),
+    deleteSample: adminProcedure.input(z.object({ id: z.number().int().positive() })).mutation(async ({ input }) => {
+      await deleteQuoteSample(input.id);
       return { success: true } as const;
     }),
   }),
