@@ -44,8 +44,8 @@ export default function Home() {
           ))}
         </nav>
 
-        <a className="header-contact" href="/harness-quote">
-          <span>ハーネス見積もり</span>
+        <a className="header-contact" href={site.harnessQuoteLink.href}>
+          <span>{site.harnessQuoteLink.label}</span>
           <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
         </a>
 
@@ -73,8 +73,8 @@ export default function Home() {
           <a href="#contact" onClick={closeMenu} className="mobile-menu__contact">
             お問い合わせ
           </a>
-          <a href="/harness-quote" onClick={closeMenu} className="mobile-menu__contact">
-            ハーネス見積もり
+          <a href={site.harnessQuoteLink.href} onClick={closeMenu} className="mobile-menu__contact">
+            {site.harnessQuoteLink.label}
           </a>
         </nav>
       </div>

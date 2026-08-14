@@ -8,6 +8,10 @@ export const site = {
   hero: {
     titleLines: ["配電盤・制御盤", "現場に、確かな一台を。"],
   },
+  harnessQuoteLink: {
+    label: "ハーネス加工お見積もり",
+    href: "/harness-quote",
+  },
   navigation: [
     { label: "私たちの約束", href: "#promise" },
     { label: "代表メッセージ", href: "#message" },
