@@ -5,6 +5,9 @@ export const site = {
   phone: "087-874-6556",
   phoneHref: "tel:0878746556",
   address: "〒769-0105 香川県高松市国分寺町柏原248番地1",
+  hero: {
+    titleLines: ["配電盤・制御盤", "現場に、確かな一台を。"],
+  },
   navigation: [
     { label: "私たちの約束", href: "#promise" },
     { label: "代表メッセージ", href: "#message" },
@@ -53,17 +56,17 @@ export const site = {
   businesses: [
     {
       number: "01",
-      title: "高圧・受配電",
+      title: "高圧盤・配電盤",
       body: "高圧盤、受電盤、配電盤の設計・組立・改造工事まで。電気を確実に届ける基盤を支えます。",
     },
     {
       number: "02",
-      title: "制御・監視",
+      title: "制御盤・監視盤",
       body: "空調・動力・監視など、設備の安定した運転に必要な各種制御盤を製作します。",
     },
     {
       number: "03",
-      title: "ケーブル・ハーネス",
+      title: "ケーブル・ハーネス加工",
       body: "図面と用途に合わせ、多品種少量のケーブル・ワイヤーハーネス加工に対応します。",
     },
   ],

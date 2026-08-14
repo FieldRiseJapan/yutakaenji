@@ -90,9 +90,9 @@ export default function Home() {
               <span>TAKAMATSU, KAGAWA</span>
             </div>
             <h1 id="hero-title">
-              配電・制御の現場に、
+              {site.hero.titleLines[0]}
               <br />
-              <span>確かな一台を。</span>
+              <span>{site.hero.titleLines[1]}</span>
             </h1>
             <p>
               高圧盤、配電盤、制御盤、ハーネス加工。
