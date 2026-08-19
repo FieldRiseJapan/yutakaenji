@@ -178,7 +178,7 @@ export default function Home() {
               body="設計・組立・改造から加工まで。用途と現場に合わせた、確かな製作を行います。"
             />
             <div className="business__visual">
-              <img src={assetUrls.detail} alt="整然と施工された制御盤内部" loading="lazy" />
+              <img src={assetUrls.harnessWorkArea} alt="ハーネス加工の作業エリア" loading="lazy" />
               <span>CONTROL / DISTRIBUTION / HARNESS</span>
             </div>
           </div>
@@ -195,6 +195,21 @@ export default function Home() {
               </article>
             ))}
           </div>
+          <div className="harness-feature">
+            <div className="harness-feature__copy">
+              <p>HARNESS / PRECISION</p>
+              <h3>設備と手仕事で、
+                <br />一つひとつ確かに仕上げる。</h3>
+              <span>端末加工から検査まで。図面・用途・数量に合わせたハーネス加工に対応します。</span>
+              <a href={site.harnessQuoteLink.href}>
+                {site.harnessQuoteLink.label} <ArrowUpRight size={17} aria-hidden="true" />
+              </a>
+            </div>
+            <div className="harness-feature__media">
+              <img src={assetUrls.harnessEquipment} alt="全自動端末加工機" loading="lazy" />
+              <img src={assetUrls.harnessWorkArea} alt="ハーネス加工の製作スペース" loading="lazy" />
+            </div>
+          </div>
         </section>
 
         <section className="quality section" id="quality" aria-labelledby="quality-title">
@@ -204,7 +219,7 @@ export default function Home() {
               <img src={assetUrls.assembly} alt="制御盤の配線を丁寧に組み上げる作業" loading="lazy" />
             </figure>
             <figure className="quality__image quality__image--accent">
-              <img src={assetUrls.inspection} alt="完成した制御盤を確認する製造スタッフ" loading="lazy" />
+              <img src={assetUrls.harnessEquipment} alt="全自動端末加工機によるハーネス端末加工" loading="lazy" />
             </figure>
             <span className="quality__stamp">MADE WITH<br />PRECISION</span>
           </div>
@@ -277,6 +292,22 @@ export default function Home() {
                 <dd>{value}</dd>
               </div>
             ))}
+          </div>
+          <div className="company__resources" aria-label="会社資料">
+            <div className="company__resources-heading">
+              <span>DOCUMENTS</span>
+              <p>会社と地域を知る資料</p>
+            </div>
+            <div className="company__resources-grid">
+              {site.resources.map((resource) => (
+                <a className="resource-card" href={resource.href} key={resource.title} target="_blank" rel="noreferrer">
+                  <img src={resource.image} alt={resource.alt} loading="lazy" />
+                  <span>PDF <ArrowUpRight size={14} aria-hidden="true" /></span>
+                  <h3>{resource.title}</h3>
+                  <p>{resource.description}</p>
+                </a>
+              ))}
+            </div>
           </div>
           <a className="company__link" href="#contact">
               ご相談・お問い合わせ <ArrowUpRight size={18} aria-hidden="true" />

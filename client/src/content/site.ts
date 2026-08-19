@@ -12,6 +12,29 @@ export const site = {
     label: "ハーネス加工お見積もり",
     href: "/harness-quote",
   },
+  resources: [
+    {
+      title: "会社パンフレット",
+      description: "会社概要と製作体制をまとめた資料です。",
+      href: "/manus-storage/yutaka-company-brochure_a7cb841d.pdf",
+      image: "/manus-storage/asset-000_7d16a406.jpg",
+      alt: "会社パンフレットに掲載された製造現場と代表者",
+    },
+    {
+      title: "ハーネスPRシート",
+      description: "加工設備とハーネス製作の実例をご覧いただけます。",
+      href: "/manus-storage/yutaka-harness-pr-sheet_723ed00e.pdf",
+      image: "/manus-storage/asset-003_e93d44d7.jpg",
+      alt: "ハーネス加工に使用する全自動端末加工機",
+    },
+    {
+      title: "周辺ハザードマップ",
+      description: "所在地周辺の防災情報をご確認いただけます。",
+      href: "/manus-storage/yutaka-hazard-map_935982f1.pdf",
+      image: "/manus-storage/hazard-map-1_7db83c66.png",
+      alt: "所在地周辺のハザードマップ",
+    },
+  ],
   navigation: [
     { label: "私たちの約束", href: "#promise" },
     { label: "代表メッセージ", href: "#message" },
@@ -114,4 +137,6 @@ export const assetUrls = {
   detail: "/manus-storage/yutaka-facility-detail_4ac8ef5c.jpg",
   president: "/manus-storage/yutaka-president-kubo_fbd8e10e.jpg",
   mark: "/manus-storage/yutaka-circuit-mark_577a06d3.png",
+  harnessEquipment: "/manus-storage/asset-003_e93d44d7.jpg",
+  harnessWorkArea: "/manus-storage/asset-004_654313e8.jpg",
 } as const;
