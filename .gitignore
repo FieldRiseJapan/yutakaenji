@@ -5,3 +5,6 @@ dist/
 *.log
 *.local
 .project-config.json
+
+client/.prerender/
+artifacts/

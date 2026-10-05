@@ -1,0 +1,13 @@
+{
+  "scope": "tracked and untracked nonignored source files",
+  "file_count": 186,
+  "patterns": [
+    "private_key",
+    "github_token",
+    "aws_key",
+    "openai_key",
+    "credential_url"
+  ],
+  "findings": [],
+  "limitations": "Pattern scan is not proof of absence. Legacy server code retained outside public bundle; no runtime credentials configured."
+}

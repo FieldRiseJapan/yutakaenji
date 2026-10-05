@@ -1,29 +1,23 @@
-name: Verify static site
-
+name: Verify static corporate site
 on:
   push:
-    branches: ["main"]
+    branches: [main, feature/yutaka-website-renewal-v1]
   pull_request:
-    branches: ["main"]
-
+    branches: [main]
+permissions:
+  contents: read
 jobs:
   verify:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
     steps:
-      - name: Check out source
-        uses: actions/checkout@v4
-      - name: Use Node.js 22
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.4.1
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      - name: Type-check source
-        run: pnpm check
-      - name: Build static site
-        run: pnpm build
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+      - run: npm ci --ignore-scripts
+      - run: npm run verify

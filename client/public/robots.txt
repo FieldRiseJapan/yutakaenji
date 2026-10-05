@@ -1,2 +1,3 @@
 User-agent: *
-Allow: /
+Allow: /yutakaenji/
+Sitemap: https://fieldrisejapan.github.io/yutakaenji/sitemap.xml

@@ -1,0 +1,57 @@
+[
+  {
+    "file": "dist/.gitkeep",
+    "bytes": 0,
+    "gzip": 20
+  },
+  {
+    "file": "dist/404.html",
+    "bytes": 912,
+    "gzip": 622
+  },
+  {
+    "file": "dist/assets/circuit.svg",
+    "bytes": 1739,
+    "gzip": 776
+  },
+  {
+    "file": "dist/assets/index-C7U67tV4.css",
+    "bytes": 16767,
+    "gzip": 4246
+  },
+  {
+    "file": "dist/assets/index-CCh7Kp5Y.js",
+    "bytes": 237665,
+    "gzip": 74433
+  },
+  {
+    "file": "dist/assets/og.png",
+    "bytes": 37303,
+    "gzip": 24133
+  },
+  {
+    "file": "dist/favicon.svg",
+    "bytes": 247,
+    "gzip": 202
+  },
+  {
+    "file": "dist/harness-quote/index.html",
+    "bytes": 961,
+    "gzip": 677
+  },
+  {
+    "file": "dist/index.html",
+    "bytes": 15489,
+    "gzip": 4989
+  },
+  {
+    "file": "dist/robots.txt",
+    "bytes": 99,
+    "gzip": 103
+  },
+  {
+    "file": "dist/sitemap.xml",
+    "bytes": 175,
+    "gzip": 159
+  }
+]
