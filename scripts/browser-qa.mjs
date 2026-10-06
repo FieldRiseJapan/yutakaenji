@@ -46,6 +46,7 @@ try {
     ["tablet", 768, 1024],
     ["smartphone", 390, 844],
     ["small-phone", 320, 740],
+    ["phone-landscape", 844, 390],
   ]) {
     const context = await browser.newContext({
       viewport: { width, height },
@@ -79,7 +80,7 @@ try {
     assert.equal(await page.locator("h1").count(), 1);
     assert.equal(
       await page.locator("h1").innerText(),
-      "電気をつなぐ。\n現場を支える。"
+      "配電盤・制御盤の設計・製作\nケーブル・ハーネス加工"
     );
     const dimensions = await page.evaluate(() => ({
       viewport: innerWidth,

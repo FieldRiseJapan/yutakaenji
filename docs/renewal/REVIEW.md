@@ -10,3 +10,6 @@ Minor findings and disposition:
 3. Plan checkboxes should reflect completed evidence. Updated at final handoff.
 
 Visual follow-up: balanced Japanese section headings to avoid an isolated trailing character; reran type/build/static and browser QA after the CSS change. Japanese font was installed only in the QA environment, never downloaded by the site itself.
+
+## 丸亀電機参考の再修正レビュー
+独立レビューで横向きスマートフォンのメニュー高さ制限漏れを発見。100dvhに合わせた最大高さとスクロールを復旧し、844×390のQAを追加。Headingの不要な英語・番号propsも削除。会社データと電話導線の保持を確認。

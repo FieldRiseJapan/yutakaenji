@@ -6,23 +6,10 @@ const nav = [
   ["#quality", "製造への姿勢"],
   ["#company", "会社案内"],
 ];
-const Arrow = () => <span aria-hidden="true">↗</span>;
-function Heading({
-  n,
-  en,
-  title,
-  id,
-}: {
-  n: string;
-  en: string;
-  title: string;
-  id: string;
-}) {
+const Arrow = () => <span aria-hidden="true">›</span>;
+function Heading({ title, id }: { title: string; id: string }) {
   return (
     <div className="section-heading">
-      <p className="eyebrow">
-        <span>{n}</span> {en}
-      </p>
       <h2 id={id}>{title}</h2>
     </div>
   );
@@ -69,10 +56,8 @@ export default function Home() {
           href="#top"
           aria-label="株式会社ユタカエンジニアリング トップへ"
         >
-          <span className="brand-word">
-            YUTAKA<span className="brand-dot">.</span>
-          </span>
-          <span className="brand-jp">株式会社ユタカエンジニアリング</span>
+          <span className="brand-word">ユタカエンジニアリング</span>
+          <span className="brand-jp">配電盤・制御盤の設計・製作</span>
         </a>
         <nav className="desktop-nav" aria-label="主要ナビゲーション">
           {nav.map(([href, label]) => (
@@ -118,23 +103,18 @@ export default function Home() {
       <main id="main" tabIndex={-1}>
         <section id="top" className="hero" aria-labelledby="hero-title">
           <div className="hero-copy">
-            <p className="eyebrow">
-              <span className="signal" /> YUTAKA ENGINEERING / KAGAWA
-            </p>
             <p className="hero-category">
-              高圧盤・配電盤・制御盤・ハーネス加工
+              香川県高松市｜株式会社ユタカエンジニアリング
             </p>
             <h1 id="hero-title">
-              電気をつなぐ。
+              配電盤・制御盤の設計・製作
               <br />
-              現場を<span className="underlined">支える。</span>
+              ケーブル・ハーネス加工
             </h1>
             <p className="hero-description">
-              配電・制御のものづくりを、香川から。
+              高圧盤・配電盤・制御盤の設計から組立、改造工事まで。
               <br />
-              設計・組立・改造、そしてハーネス加工。
-              <br />
-              一台ごとの要求に、まっすぐ向き合います。
+              電気設備を支えるものづくりに取り組んでいます。
             </p>
             <div className="hero-actions">
               <a className="button button--dark" href="#business">
@@ -143,28 +123,6 @@ export default function Home() {
               <a className="text-link" href="#contact">
                 製作のご相談 <Arrow />
               </a>
-            </div>
-            <div className="hero-foot">
-              <span>TAKAMATSU, KAGAWA</span>
-              <a href="#business">SCROLL ↓</a>
-            </div>
-          </div>
-          <div className="hero-art">
-            <img
-              src="assets/circuit.svg"
-              width="720"
-              height="760"
-              alt=""
-              fetchPriority="high"
-            />
-            <div className="art-top">
-              <span>CONNECTING THE EVERYDAY</span>
-              <span>01 — 03</span>
-            </div>
-            <div className="art-caption">
-              <span className="art-caption-line" />
-              <p>つなぐ。つくる。まもる。</p>
-              <small>電気・制御のつながりを表すイメージ図</small>
             </div>
           </div>
         </section>
@@ -183,12 +141,7 @@ export default function Home() {
           aria-labelledby="business-title"
         >
           <div className="section-intro">
-            <Heading
-              n="01"
-              en="OUR BUSINESS"
-              title="一台ごとの要求に、確かな仕事を。"
-              id="business-title"
-            />
+            <Heading title="事業内容" id="business-title" />
             <p>
               電気を届ける盤から、設備を動かす制御、
               <br className="desktop-break" />
@@ -196,24 +149,12 @@ export default function Home() {
             </p>
           </div>
           <div className="business-grid">
-            {site.businesses.map((b, i) => (
+            {site.businesses.map(b => (
               <article
                 className="business-card"
                 id={`service-${b.number}`}
                 key={b.number}
               >
-                <div
-                  className={`service-graphic service-graphic--${i}`}
-                  aria-hidden="true"
-                >
-                  {[0, 1, 2, 3].map(n => (
-                    <i key={n} />
-                  ))}
-                </div>
-                <p className="card-kicker">
-                  {b.number} /{" "}
-                  {["POWER DISTRIBUTION", "CONTROL SYSTEMS", "WIRE HARNESS"][i]}
-                </p>
                 <h3>{b.title}</h3>
                 <p>{b.body}</p>
                 <a className="card-link" href="#contact">
@@ -223,7 +164,7 @@ export default function Home() {
             ))}
           </div>
           <div className="business-note">
-            <span>OTHER BUSINESS</span>
+            <span>電気資材販売</span>
             <p>電気資材の販売も行っています。</p>
             <a href="#contact">
               お問い合わせ <Arrow />
@@ -236,12 +177,7 @@ export default function Home() {
           aria-labelledby="quality-title"
         >
           <div className="quality-intro">
-            <Heading
-              n="02"
-              en="OUR APPROACH"
-              title="図面の先にある、現場のために。"
-              id="quality-title"
-            />
+            <Heading title="製造への取り組み" id="quality-title" />
             <p>
               求められる機能に対し、確実に、正確に。
               <br />
@@ -250,11 +186,6 @@ export default function Home() {
             <a className="text-link" href="#contact">
               製作について相談する <Arrow />
             </a>
-            <div className="quality-word" aria-hidden="true">
-              PRECISION
-              <br />
-              <span>IN EVERY CONNECTION.</span>
-            </div>
           </div>
           <ol className="process">
             {site.process.map(([n, title, body]) => (
@@ -269,33 +200,12 @@ export default function Home() {
           </ol>
         </section>
         <section
-          className="section promise"
-          id="promise"
-          aria-labelledby="promise-title"
-        >
-          <Heading
-            n="03"
-            en="OUR PROMISE"
-            title="つなぐ。つくる。まもる。"
-            id="promise-title"
-          />
-          <div className="principles">
-            {site.principles.map(p => (
-              <article key={p.number}>
-                <span>{p.number}</span>
-                <h3>{p.title}</h3>
-                <p>{p.body}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-        <section
           className="section message"
           id="message"
           aria-labelledby="message-title"
         >
           <div>
-            <p className="eyebrow">MESSAGE</p>
+            <p className="eyebrow">代表ご挨拶</p>
             <h2 id="message-title">
               ものづくりの先に、
               <br />
@@ -319,12 +229,7 @@ export default function Home() {
           aria-labelledby="company-title"
         >
           <div className="section-intro">
-            <Heading
-              n="04"
-              en="COMPANY"
-              title="香川・高松を拠点に。"
-              id="company-title"
-            />
+            <Heading title="会社概要" id="company-title" />
             <p>
               技術を積み重ね、地域に根を張る。
               <br />
@@ -333,13 +238,7 @@ export default function Home() {
           </div>
           <div className="company-grid">
             <div className="company-location">
-              <p>YUTAKA ENGINEERING</p>
-              <strong>
-                TAKAMATSU
-                <br />
-                <span>KAGAWA.</span>
-              </strong>
-              <div className="location-rule" />
+              <h3>所在地・アクセス</h3>
               <p>{site.address}</p>
               <a
                 className="text-link"
@@ -373,12 +272,7 @@ export default function Home() {
           id="history"
           aria-labelledby="history-title"
         >
-          <Heading
-            n="05"
-            en="OUR HISTORY"
-            title="積み重ねてきた歩み。"
-            id="history-title"
-          />
+          <Heading title="会社沿革" id="history-title" />
           <ol className="timeline">
             {site.timeline.map(([year, event]) => (
               <li key={year}>
@@ -394,12 +288,7 @@ export default function Home() {
           aria-labelledby="documents-title"
         >
           <div className="section-intro">
-            <Heading
-              n="06"
-              en="DOCUMENTS"
-              title="会社と製作を知る資料。"
-              id="documents-title"
-            />
+            <Heading title="会社資料のご案内" id="documents-title" />
             <p>
               資料をご希望の方は、
               <br />
@@ -425,12 +314,8 @@ export default function Home() {
           aria-labelledby="contact-title"
         >
           <div>
-            <p className="eyebrow">LET’S TALK / CONTACT</p>
-            <h2 id="contact-title">
-              まずは、現場のことを
-              <br />
-              お聞かせください。
-            </h2>
+            <p className="eyebrow">ご相談・お問い合わせ</p>
+            <h2 id="contact-title">お電話でお問い合わせください。</h2>
             <p>配電盤・制御盤・ハーネス加工のご相談をお受けします。</p>
           </div>
           <div className="contact-action">
@@ -450,9 +335,7 @@ export default function Home() {
       <footer className="footer">
         <div className="footer-top">
           <a className="brand" href="#top">
-            <span className="brand-word">
-              YUTAKA<span className="brand-dot">.</span>
-            </span>
+            <span className="brand-word">ユタカエンジニアリング</span>
             <span className="brand-jp">{site.companyName}</span>
           </a>
           <p>
@@ -466,7 +349,7 @@ export default function Home() {
         </div>
         <div className="footer-bottom">
           <small>© YUTAKA ENGINEERING</small>
-          <span>つなぐ。つくる。まもる。</span>
+          <span>株式会社ユタカエンジニアリング</span>
         </div>
       </footer>
     </>

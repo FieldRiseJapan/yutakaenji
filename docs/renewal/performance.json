@@ -10,19 +10,14 @@
     "gzip": 622
   },
   {
-    "file": "dist/assets/circuit.svg",
-    "bytes": 1739,
-    "gzip": 776
+    "file": "dist/assets/index-BhQZnWiB.css",
+    "bytes": 11633,
+    "gzip": 2976
   },
   {
-    "file": "dist/assets/index-C7U67tV4.css",
-    "bytes": 16767,
-    "gzip": 4246
-  },
-  {
-    "file": "dist/assets/index-CCh7Kp5Y.js",
-    "bytes": 237665,
-    "gzip": 74433
+    "file": "dist/assets/index-BngTRorx.js",
+    "bytes": 235086,
+    "gzip": 73607
   },
   {
     "file": "dist/assets/og.png",
@@ -41,8 +36,8 @@
   },
   {
     "file": "dist/index.html",
-    "bytes": 15489,
-    "gzip": 4989
+    "bytes": 13004,
+    "gzip": 4230
   },
   {
     "file": "dist/robots.txt",
